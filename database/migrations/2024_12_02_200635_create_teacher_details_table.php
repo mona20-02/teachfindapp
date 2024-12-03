@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('qualifications')->nullable();
             $table->text('description')->nullable();
             $table->string('image')->nullable(); 
-            $table->string('schedule_availability')->nullable();
+            $table->dateTime('schedule_availability_start')->nullable();
+            $table->dateTime('schedule_availability_end')->nullable();
             $table->timestamps();
         });
     }

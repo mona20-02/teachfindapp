@@ -3,23 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Profile</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}"> <!-- Include your CSS file -->
+    <title>Edit Profile</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .profile-image {
-            max-width: 150px; /* Set a maximum width for the profile image */
-            border-radius: 8px; /* Optional: Rounded corners */
-            margin-top: 10px; /* Space above the image */
-        }
-    </style>
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center">Teacher Profile</h1>
+        <h1 class="text-center">Edit Your Profile</h1>
 
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -27,7 +17,7 @@
 
         <form action="{{ route('teacher.profile.update') }}" method="POST" enctype="multipart/form-data" class="mt-4">
             @csrf
-            
+
             <div class="form-group">
                 <label for="qualifications">Qualifications:</label>
                 <input type="text" name="qualifications" id="qualifications" 
@@ -44,7 +34,7 @@
                 <label for="image">Profile Image:</label>
                 <input type="file" name="image" id="image" class="form-control-file">
                 @if($teacherDetails && $teacherDetails->image)
-                    <img src="{{ asset('storage/' . $teacherDetails->image) }}" alt="Profile Image" class="profile-image">
+                    <img src="{{ asset('storage/' . $teacherDetails->image) }}" alt="Profile Image" class="img-thumbnail mt-2" width="100">
                 @endif
             </div>
 
@@ -62,8 +52,7 @@
                        value="{{ old('schedule_availability_end', $teacherDetails->schedule_availability_end ?? '') }}">
             </div>
 
-            <button type="submit" class="btn btn-primary">Create Profile</button>
+            <button type="submit" class="btn btn-primary">Update Profile</button>
         </form>
     </div>
-</body>
 </html>
