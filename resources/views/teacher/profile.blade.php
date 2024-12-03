@@ -1,4 +1,4 @@
-<!-- resources/views/teacher/profile.blade.php -->
+
 
 <!DOCTYPE html>
 <html lang="en">

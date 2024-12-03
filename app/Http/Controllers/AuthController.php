@@ -34,7 +34,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect($user->role === 'teacher' ? '/teacher/dashboard' : '/student/dashboard');
+        return redirect($user->role === 'teacher' ? '/teacher/profile' : '/student/dashboard');
     }
 
     public function showLoginForm()
