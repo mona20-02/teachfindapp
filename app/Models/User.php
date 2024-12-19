@@ -26,7 +26,7 @@ class User extends Authenticatable
     ];
     public function teacherDetails()
     {
-        return $this->hasOne(TeacherDetails::class);
+        return $this->hasOne(TeacherDetails::class, 'user_id');
     }
     /**
      * The attributes that should be hidden for serialization.

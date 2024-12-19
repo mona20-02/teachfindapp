@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\TeacherDetails;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
     public function index()
-{
+{   $bookings = Booking::where('student_id', auth()->id())->get(); 
     $teachers = TeacherDetails::with('user')->get(); 
-    return view('student.dashboard', compact('teachers')); 
+    return view('student.dashboard', compact('teachers','bookings', )); 
 }
 public function searchTeachers(Request $request)
 {
@@ -30,7 +31,7 @@ public function searchTeachers(Request $request)
     }
 
     $teachers = $query->get(); // Get filtered results
-
-    return view('student.dashboard', compact('teachers')); // Return the same view with updated results
+    $bookings = Booking::where('student_id', auth()->id())->get(); 
+    return view('student.dashboard', compact('teachers', 'bookings')); // Return the same view with updated results
 }
 }

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\BookingController;
 
 // Home Route
 Route::get('/', function () {
@@ -27,3 +28,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/teacher/profile/edit', [TeacherController::class, 'edit'])->name('teacher.edit');
     Route::post('/teacher/profile', [TeacherController::class, 'updateProfile'])->name('teacher.profile.update');
 });
+
+// Routes for Booking
+Route::post('/bookings/{teacher}', [BookingController::class, 'book'])->name('student.bookings.book');
+Route::get('/teacher/bookings', [BookingController::class, 'index'])->name('teacher.bookings.index');
+Route::post('/bookings/accept/{id}', [BookingController::class, 'accept'])->name('booking.accept');
+Route::post('/bookings/reject/{id}', [BookingController::class, 'reject'])->name('booking.reject');
+// routes/web.php
+

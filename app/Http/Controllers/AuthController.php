@@ -20,10 +20,13 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'phone' => 'nullable|string|max:15',
+            'phone' => 'required|string|max:10',
             'role' => 'required|string|in:student,teacher',
         ]);
-
+        if ($request->phone && !in_array(substr($request->phone, 0, 3), ['091', '092', '093', '094'])) {
+            return back()->withErrors(['phone' => 'The phone number must start with 091, 092, 093, or 094.'])
+                         ->withInput();
+        }
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
