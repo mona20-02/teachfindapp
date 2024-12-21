@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone');
             $table->string('role');
+            $table->integer('student_id')->nullable()->unique();
+            $table->integer('teacher_id')->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();
         });

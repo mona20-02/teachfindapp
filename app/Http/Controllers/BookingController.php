@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -11,13 +12,13 @@ class BookingController extends Controller
     public function book(Request $request)
     {
         $request->validate([
-            'teacher_id' => 'required|exists:users,id', // Ensure the teacher exists
+            'teacher_id' => 'required|exists:users,teacher_id', // Ensure the teacher exists
             'subject' => 'required|string|max:255',
         ]);
 
         Booking::create([
-            'student_id' => auth()->id(), // Assuming the user is authenticated as a student
-            'teacher_id' => $request->teacher_id,
+            'student_id' => auth()->user()->student_id, // Assuming the user is authenticated as a student
+            'teacher_id' => User::where('teacher_id', $request->teacher_id)->first()->id,
             'subject' => $request->subject,
             'status' => 'pending',
         ]);
@@ -28,10 +29,11 @@ class BookingController extends Controller
     // Method to show the teacher's bookings
     public function index()
     {
-        $bookings = Booking::where('teacher_id', auth()->id())->get(); // Get bookings for the authenticated teacher
-
+        $bookings = Booking::with(['student', 'teacher'])->where('teacher_id', auth()->id())->get();
+    
         return view('teacher.bookings.index', compact('bookings'));
     }
+    
 
     // Method to accept a booking
     public function accept($id)

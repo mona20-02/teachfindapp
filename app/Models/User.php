@@ -23,11 +23,26 @@ class User extends Authenticatable
         'password',
         'phone',
         'role',
+        'student_id', 
+        'teacher_id',
     ];
     public function teacherDetails()
     {
         return $this->hasOne(TeacherDetails::class, 'user_id');
     }
+    protected static function boot()
+{
+    parent::boot();
+
+    static::creating(function ($user) {
+        if ($user->role == 'student') {
+            $user->student_id = User::where('role', 'student')->max('student_id') + 1;
+        } elseif ($user->role == 'teacher') {
+            $user->teacher_id = User::where('role', 'teacher')->max('teacher_id') + 1;
+        }
+    });
+}
+
     /**
      * The attributes that should be hidden for serialization.
      *
