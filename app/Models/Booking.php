@@ -20,12 +20,12 @@ class Booking extends Model
     // Relationship with Student
     public function student()
     {
-        return $this->belongsTo(User::class, 'student_id');
+        return $this->belongsTo(User::class, 'student_id', 'student_id');
     }
 
     // Relationship with Teacher
     public function teacher()
     {
-        return $this->belongsTo(User::class,'teacher_id');
+        return $this->belongsTo(User::class,'teacher_id', 'teacher_id');
     }
 }
